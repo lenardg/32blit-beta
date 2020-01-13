@@ -69,6 +69,7 @@ void init_level() {
 	state.playervelocity.x = 0;
 	state.playervelocity.y = 0;
 	state.can_jump = true;
+	state.current_floor = 0;
 
 	for (int i = 0; i < FLOOR_COUNT; ++i) {
 		state.floors[i].holes.clear();
@@ -85,7 +86,6 @@ void init_level() {
 void init() {
 	set_screen_mode(screen_mode::lores);
 
-	state.current_floor = 0;
 	state.current_level = 1;
 
 	state.score = 0;
@@ -194,13 +194,15 @@ void checkKeys() {
 
 void checkHoles(bool& holeAbove, bool& holeBelow) {
 	holeAbove = false;
-	for (auto h : state.floors[state.current_floor].holes) {
-		auto x1 = h.start;
-		auto x2 = h.start + HOLE_WIDTH;
+	if (state.current_floor < FLOOR_COUNT) {
+		for (auto h : state.floors[state.current_floor].holes) {
+			auto x1 = h.start;
+			auto x2 = h.start + HOLE_WIDTH;
 
-		if (state.playerpos.x >= x1 && state.playerpos.x + PLAYER_WIDTH <= x2) {
-			holeAbove = true;
-			break;
+			if (state.playerpos.x >= x1 && state.playerpos.x + PLAYER_WIDTH <= x2) {
+				holeAbove = true;
+				break;
+			}
 		}
 	}
 
@@ -274,6 +276,12 @@ void updatePosition() {
 
 	if (abs(state.playervelocity.x) < 0.1f) {
 		state.playervelocity.x = 0;
+	}
+
+	if (state.current_floor == FLOOR_COUNT) {
+		state.current_level++;
+		state.score += 100;
+		init_level();
 	}
 }
 
