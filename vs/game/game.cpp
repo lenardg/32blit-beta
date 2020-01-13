@@ -14,8 +14,8 @@ using namespace blit;
 #define SCREEN_WIDTH fb.bounds.w
 #define SCREEN_HEIGHT fb.bounds.h
 
-#define JUMP_VELOCITY -2.33f
-#define GRAVITY 0.2f
+#define JUMP_VELOCITY -1.63f
+#define GRAVITY 0.1f
 
 #define CORRIDOR_HEIGHT 13
 #define FLOOR_HEIGHT 1
@@ -42,10 +42,6 @@ struct {
 
 uint16_t last_buttons = 0;
 
-//uint16_t counter = 0;
-//uint32_t lastTime = 0;
-//float calculatedFps = 0.0f;
-
 ///////////////////////////////////////////////////////////////////////////
 //
 // init()
@@ -54,7 +50,6 @@ uint16_t last_buttons = 0;
 //
 void init() {
 	set_screen_mode(screen_mode::lores);
-	blit::show_fps = true;
 
 	state.playerpos.x = 4;
 	state.playerpos.y = fb.bounds.h - PLAYER_HEIGHT;
@@ -137,16 +132,6 @@ void render(uint32_t time) {
 
 	fb.pen(blit::rgba(0, 200, 255));
 	fb.rectangle(rect(state.playerpos.x, state.playerpos.y, PLAYER_WIDTH, PLAYER_HEIGHT));
-
-	//counter++;
-	//if (time - lastTime > 1000) {
-	//	float elapsed = ((time - lastTime) / 1000.0f) / 1.0f;
-	//	float fps = (float)counter * elapsed;
-	//	calculatedFps = fps;
-	//	lastTime = time;
-	//	counter = 0;
-	//}
-
 }
 
 
