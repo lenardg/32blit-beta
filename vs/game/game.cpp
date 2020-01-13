@@ -36,12 +36,45 @@ struct {
 	vec2 playerpos;
 	vec2 playervelocity;
 	uint8_t current_floor;
+	uint8_t current_level;
 	uint32_t score;
 	bool can_jump;
 	gamefloor floors[FLOOR_COUNT];
 } state;
 
 uint16_t last_buttons = 0;
+
+///////////////////////////////////////////////////////////////////////////
+//
+// init_level()
+//
+// setup a new level
+//
+void add_random_hole(int level) {
+	hole h;
+	h.speed = (blit::random() % 2 == 0) ? HOLE_BASESPEED : -HOLE_BASESPEED;
+	h.start = blit::random() % (SCREEN_WIDTH - HOLE_WIDTH);
+	state.floors[level].holes.push_back(h);
+}
+
+void add_random_hole() {
+	auto level = blit::random() % (FLOOR_COUNT - 1);
+	add_random_hole(level);
+}
+
+void init_level() {
+	state.playerpos.x = blit::random() % (SCREEN_WIDTH - PLAYER_WIDTH);
+	state.playerpos.y = SCREEN_HEIGHT - PLAYER_HEIGHT;
+
+	state.playervelocity.x = 0;
+	state.playervelocity.y = 0;
+	state.can_jump = true;
+
+	for (int i = 0; i < FLOOR_COUNT; ++i) {
+		state.floors[i].holes.clear();
+		add_random_hole(i);
+	}
+}
 
 ///////////////////////////////////////////////////////////////////////////
 //
@@ -52,24 +85,12 @@ uint16_t last_buttons = 0;
 void init() {
 	set_screen_mode(screen_mode::lores);
 
-	state.playerpos.x = 4;
-	state.playerpos.y = fb.bounds.h - PLAYER_HEIGHT;
-	
-	state.playervelocity.x = 0;
-	state.playervelocity.y = 0;
-
 	state.current_floor = 0;
+	state.current_level = 1;
 
 	state.score = 0;
 
-	state.can_jump = true;
-
-	for (int i = 0; i < FLOOR_COUNT; ++i) {
-		hole h;
-		h.speed = (blit::random() % 2 == 0) ? HOLE_BASESPEED : -HOLE_BASESPEED;
-		h.start = blit::random() % (SCREEN_WIDTH - HOLE_WIDTH);
-		state.floors[i].holes.push_back(h);
-	}
+	init_level();
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -124,7 +145,7 @@ void render(uint32_t time) {
 	fb.rectangle(rect(0, 0, 160, 14));
 	fb.pen(rgba(0, 0, 0));
 
-	fb.text("Score: " + std::to_string(state.score), &minimal_font[0][0], point(5, 4));
+	fb.text("Level: " + std::to_string(state.current_level) + " - Score: " + std::to_string(state.score), &minimal_font[0][0], point(5, 4));
 
 	for (int i = 0; i < 8; i++)
 	{
@@ -223,11 +244,14 @@ void updatePosition() {
 	// check if we reach next level
 	if (holeAbove && state.playerpos.y + PLAYER_HEIGHT <= SCREEN_HEIGHT - (state.current_floor + 1) * CORRIDOR_HEIGHT) {
 		state.current_floor++;
+		add_random_hole();
+		state.score += 10;
 	}
 
 	// check if we are falling down
 	if (holeBelow && state.playerpos.y + PLAYER_HEIGHT > SCREEN_HEIGHT - (state.current_floor) * CORRIDOR_HEIGHT) {
 		state.current_floor--;
+		state.score -= 5;
 	}
 
 	// check if current level holds us
