@@ -93,7 +93,7 @@ void renderFloor(int floornumber, gamefloor floor) {
 	}
 	std::sort(holes.begin(), holes.end(), compareHoles);
 
-	std::vector<float> points;
+	std::vector<int> points;
 	points.push_back(0);
 	for (auto ptr = holes.begin(); ptr < holes.end(); ++ptr) {
 		points.push_back((*ptr).start);
@@ -128,7 +128,7 @@ void render(uint32_t time) {
 
 	for (int i = 0; i < 8; i++)
 	{
-		fb.pen(blit::rgba(40 + i * 4, 40 + i * 4, 40 + i * 4));
+		fb.pen(blit::rgba(10 + i * 7, 10 + i * 7, 10 + i * 7));
 		fb.rectangle(rect(0, SCREEN_HEIGHT - CORRIDOR_HEIGHT - i * CORRIDOR_HEIGHT, SCREEN_WIDTH, CORRIDOR_HEIGHT));
 		renderFloor(i, state.floors[i]);
 	}
