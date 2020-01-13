@@ -14,7 +14,7 @@ using namespace blit;
 #define SCREEN_WIDTH fb.bounds.w
 #define SCREEN_HEIGHT fb.bounds.h
 
-#define JUMP_VELOCITY -1.63f
+#define JUMP_VELOCITY -1.68f
 #define GRAVITY 0.1f
 
 #define CORRIDOR_HEIGHT 13
@@ -35,6 +35,7 @@ struct gamefloor {
 struct {
 	vec2 playerpos;
 	vec2 playervelocity;
+	uint8_t current_floor;
 	uint32_t score;
 	bool can_jump;
 	gamefloor floors[FLOOR_COUNT];
@@ -56,6 +57,8 @@ void init() {
 	
 	state.playervelocity.x = 0;
 	state.playervelocity.y = 0;
+
+	state.current_floor = 0;
 
 	state.score = 0;
 
@@ -168,6 +171,34 @@ void checkKeys() {
 	}
 }
 
+void checkHoles(bool& holeAbove, bool& holeBelow) {
+	holeAbove = false;
+	for (auto h : state.floors[state.current_floor].holes) {
+		auto x1 = h.start;
+		auto x2 = h.start + HOLE_WIDTH;
+
+		if (state.playerpos.x >= x1 && state.playerpos.x + PLAYER_WIDTH <= x2) {
+			holeAbove = true;
+			break;
+		}
+	}
+
+	holeBelow = false;
+	if (state.current_floor == 0) {
+		return;
+	}
+
+	for (auto h : state.floors[state.current_floor - 1].holes) {
+		auto x1 = h.start;
+		auto x2 = h.start + HOLE_WIDTH;
+
+		if (state.playerpos.x >= x1 && state.playerpos.x + PLAYER_WIDTH <= x2) {
+			holeBelow = true;
+			break;
+		}
+	}
+}
+
 void updatePosition() {
 	state.playerpos.x += state.playervelocity.x;
 	if (state.playerpos.x <= -PLAYER_WIDTH) {
@@ -178,7 +209,35 @@ void updatePosition() {
 	}
 
 	state.playerpos.y += state.playervelocity.y;
-	if (state.playerpos.y > SCREEN_HEIGHT - PLAYER_HEIGHT) {
+
+	// check if player is standing under a hole
+	bool holeAbove = false, holeBelow = false;
+	checkHoles(holeAbove, holeBelow);
+
+	// check if we hit the head
+	if (!holeAbove && state.playerpos.y <= SCREEN_HEIGHT - (state.current_floor + 1) * CORRIDOR_HEIGHT) {
+		state.playerpos.y = SCREEN_HEIGHT - (state.current_floor + 1) * CORRIDOR_HEIGHT + FLOOR_HEIGHT;
+		state.playervelocity.y = 0;
+	}
+
+	// check if we reach next level
+	if (holeAbove && state.playerpos.y + PLAYER_HEIGHT <= SCREEN_HEIGHT - (state.current_floor + 1) * CORRIDOR_HEIGHT) {
+		state.current_floor++;
+	}
+
+	// check if we are falling down
+	if (holeBelow && state.playerpos.y + PLAYER_HEIGHT > SCREEN_HEIGHT - (state.current_floor) * CORRIDOR_HEIGHT) {
+		state.current_floor--;
+	}
+
+	// check if current level holds us
+	if (!holeBelow && state.playerpos.y + PLAYER_HEIGHT > SCREEN_HEIGHT - (state.current_floor) * CORRIDOR_HEIGHT ) {
+		state.playervelocity.y = 0;
+		state.playerpos.y = SCREEN_HEIGHT - (state.current_floor) * CORRIDOR_HEIGHT - PLAYER_HEIGHT;
+		state.can_jump = true;
+	}
+	// check if we are at the bottom of the screen
+	else if (state.playerpos.y > SCREEN_HEIGHT - PLAYER_HEIGHT) {
 		state.playervelocity.y = 0;
 		state.playerpos.y = SCREEN_HEIGHT - PLAYER_HEIGHT;
 		state.can_jump = true;
