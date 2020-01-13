@@ -63,8 +63,8 @@ void init() {
 
 	for (int i = 0; i < FLOOR_COUNT; ++i) {
 		hole h;
-		h.speed = (random() % 2 == 0) ? HOLE_BASESPEED : -HOLE_BASESPEED;
-		h.start = random() % (SCREEN_WIDTH - HOLE_WIDTH);
+		h.speed = (blit::random() % 2 == 0) ? HOLE_BASESPEED : -HOLE_BASESPEED;
+		h.start = blit::random() % (SCREEN_WIDTH - HOLE_WIDTH);
 		state.floors[i].holes.push_back(h);
 	}
 }
