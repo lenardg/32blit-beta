@@ -5,8 +5,6 @@
 #include "tweening.hpp"
 
 #include "../graphics/font.hpp"
-#include <sstream>
-#include <iomanip>
 
 namespace blit {
 
@@ -46,9 +44,9 @@ namespace blit {
   }
 
   void show_fps_value() {
-      std::stringstream ss;
-      ss << std::fixed << std::setprecision(1) << blit::fps;
-      std::string mystring = ss.str();
+      std::string fpsstring;
+      fpsstring.resize(16, 0);
+      fpsstring.resize(snprintf(&fpsstring[0], 16, "%.1f", blit::fps));
 
       auto oldpen = fb.pen();
 
@@ -57,7 +55,7 @@ namespace blit {
       fb.rectangle(rect(fb.bounds.w - 21, 0, 21, 12));
       fb.alpha = 255;
       fb.pen(rgba(0, 255, 0));
-      fb.text(mystring, &minimal_font[0][0], point(fb.bounds.w - 20, 2));
+      fb.text(fpsstring, &minimal_font[0][0], point(fb.bounds.w - 20, 2));
 
       fb.pen(oldpen);
   }
