@@ -115,10 +115,17 @@ namespace blit {
   /**
    * TODO: Document this function
    *
-   * \param v
+   * param v
    */
   void surface::pen(rgba v) {    
     _pen = v;    
+  }
+
+  /**
+   * Return the current pen
+   */
+  rgba surface::pen() {
+      return _pen;
   }
 
   /*void surface::blit_sprite(const rect &sprite, const point &p, const uint8_t &t) {

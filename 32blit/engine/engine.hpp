@@ -11,6 +11,8 @@ namespace blit {
   extern surface      &fb;
   extern bool         halted;
 
+  extern bool         show_fps;
+  extern float        fps;
 
   extern void     (*init)             ();
   extern void     (*update)           (uint32_t time);

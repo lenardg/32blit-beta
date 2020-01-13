@@ -84,6 +84,7 @@ namespace blit {
     void generate_mipmaps(uint8_t depth);
 
     void pen(rgba v);
+    rgba pen();
 
     void clear();
     void pixel(const point &p);

@@ -4,6 +4,10 @@
 #include "timer.hpp"
 #include "tweening.hpp"
 
+#include "../graphics/font.hpp"
+#include <sstream>
+#include <iomanip>
+
 namespace blit {
 
   void (*init)()                                = nullptr;
@@ -25,6 +29,38 @@ namespace blit {
   uint32_t pending_render_time = 0;
 
   uint32_t last_tick_time = 0;
+
+  bool show_fps = false;
+  float fps = 0.0f;
+  uint32_t frame_count = 0;
+  uint32_t fps_measurement_time = 0;
+
+  void calculate_fps(uint32_t time) {
+      frame_count++;
+      if (time - fps_measurement_time > 1000) {
+          float durationMultiplier = ((time - fps_measurement_time) / 1000.0f) / 1.0f;
+          fps = (float)frame_count * durationMultiplier;
+          fps_measurement_time = time;
+          frame_count = 0;
+      }
+  }
+
+  void show_fps_value() {
+      std::stringstream ss;
+      ss << std::fixed << std::setprecision(1) << blit::fps;
+      std::string mystring = ss.str();
+
+      auto oldpen = fb.pen();
+
+      fb.alpha = 192;
+      fb.pen(rgba(30, 30, 30));
+      fb.rectangle(rect(fb.bounds.w - 21, 0, 21, 12));
+      fb.alpha = 255;
+      fb.pen(rgba(0, 255, 0));
+      fb.text(mystring, &minimal_font[0][0], point(fb.bounds.w - 20, 2));
+
+      fb.pen(oldpen);
+  }
 
   bool tick(uint32_t time) {
     bool has_rendered = false;
@@ -48,6 +84,10 @@ namespace blit {
     pending_render_time += (time - last_tick_time);
     if (pending_render_time >= render_rate_ms) {
       render(time);
+      if (show_fps) {
+          calculate_fps(time);
+          show_fps_value();
+      }
       pending_render_time -= render_rate_ms;
       has_rendered = true;
     }

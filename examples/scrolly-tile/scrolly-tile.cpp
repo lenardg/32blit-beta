@@ -411,6 +411,7 @@ void new_game() {
 void init(void) {
     std::srand(12312897);
     blit::set_screen_mode(blit::lores);
+    blit::show_fps = true;
     state_update.init(update_state, 10, -1);
     new_game();
 }
