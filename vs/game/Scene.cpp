@@ -36,6 +36,11 @@ void Scene::checkKeys(uint32_t time) {
 	uint16_t changed = blit::buttons ^ _last_buttons;
 	_pressed = changed & blit::buttons;
 	_released = changed & ~blit::buttons;
+	updateKeyStatus();
+}
+
+void Scene::updateKeyStatus() {
+	_last_buttons = blit::buttons;
 }
 
 bool Scene::isHeld(blit::button button) {

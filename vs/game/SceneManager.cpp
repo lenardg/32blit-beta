@@ -12,6 +12,7 @@ SceneManager::~SceneManager() {
 void SceneManager::pushScene(Scene* scene) {
 	scenes.push_back(scene);
 	scene->execInit();
+	scene->updateKeyStatus();
 }
 
 void SceneManager::popScene() {
@@ -22,6 +23,10 @@ void SceneManager::popScene() {
 
 	if (lastScene->isAutoDeleting()) {
 		delete lastScene;
+	}
+
+	if (scenes.size() > 0) {
+		scenes.back()->updateKeyStatus();
 	}
 }
 

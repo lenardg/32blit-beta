@@ -18,3 +18,8 @@ void PauseScene::render(uint32_t time) {
 void PauseScene::on_X_pressed() {
 	exitScene();
 }
+
+void PauseScene::on_Menu_pressed() {
+	exitScene();
+}
+

@@ -57,6 +57,6 @@ protected:
 	virtual void on_Left();
 	virtual void on_Right();
 	virtual void on_A_pressed();
-	virtual void on_B_pressed();
+	virtual void on_Menu_pressed();
 };
 

@@ -160,7 +160,7 @@ void GameScene::on_A_pressed() {
 	}
 }
 
-void GameScene::on_B_pressed() {
+void GameScene::on_Menu_pressed() {
 	SceneManager::getInstance().pushScene(new PauseScene());
 }
 

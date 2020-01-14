@@ -28,6 +28,15 @@ void SceneWithInputEvents::checkKeys(uint32_t time) {
 	if (isPressed(blit::button::Y)) {
 		on_Y_pressed();
 	}
+	if (isPressed(blit::button::MENU)) {
+		on_Menu_pressed();
+	}
+	if (isPressed(blit::button::HOME)) {
+		on_Home_pressed();
+	}
+	if (isPressed(blit::button::JOYSTICK)) {
+		on_Joystick_pressed();
+	}
 
 	if (isReleased(blit::button::A)) {
 		on_A_released();
@@ -41,5 +50,13 @@ void SceneWithInputEvents::checkKeys(uint32_t time) {
 	if (isReleased(blit::button::Y)) {
 		on_Y_released();
 	}
-
+	if (isReleased(blit::button::MENU)) {
+		on_Menu_released();
+	}
+	if (isReleased(blit::button::HOME)) {
+		on_Home_released();
+	}
+	if (isReleased(blit::button::JOYSTICK)) {
+		on_Joystick_released();
+	}
 }

@@ -50,6 +50,9 @@ public:
 		return _queuedToEnd;
 	}
 
+public:
+	void updateKeyStatus();
+
 protected:
 	bool isPressed(blit::button button);
 	bool isReleased(blit::button button);
