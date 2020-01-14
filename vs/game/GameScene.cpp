@@ -57,6 +57,12 @@ void GameScene::init_level() {
 
 	state.playervelocity.x = 0;
 	state.playervelocity.y = 0;
+	state.playerstate = playerState::READY;
+	state.playerstatecounter = 0;
+	state.dizzycounter = 0;
+	
+	state.lives = 3;
+
 	state.can_jump = true;
 	state.current_floor = 0;
 
@@ -119,6 +125,42 @@ void GameScene::renderFloor(int floornumber, gamefloor floor) {
 	}
 }
 
+void GameScene::renderPlayer() {
+	fb.pen(blit::rgba(0, 200, 255));
+
+	if (state.playerstate == playerState::READY) {
+		fb.rectangle(rect(state.playerpos.x, state.playerpos.y, PLAYER_WIDTH, PLAYER_HEIGHT));
+	}
+	else if (state.playerstate == playerState::RUNNING) {
+		if (state.playerstatecounter % 15 < 5) {
+			fb.rectangle(rect(state.playerpos.x, state.playerpos.y, PLAYER_WIDTH, PLAYER_HEIGHT / 2));
+			fb.rectangle(rect(state.playerpos.x - 1, state.playerpos.y + PLAYER_HEIGHT / 2, PLAYER_WIDTH / 2, PLAYER_HEIGHT / 2));
+			fb.rectangle(rect(state.playerpos.x + PLAYER_WIDTH / 2, state.playerpos.y + PLAYER_HEIGHT / 2, PLAYER_WIDTH / 2, PLAYER_HEIGHT / 2));
+		}
+		else if (state.playerstatecounter % 15 < 10) {
+			fb.rectangle(rect(state.playerpos.x, state.playerpos.y, PLAYER_WIDTH, PLAYER_HEIGHT / 2));
+			fb.rectangle(rect(state.playerpos.x - 1, state.playerpos.y + PLAYER_HEIGHT / 2, PLAYER_WIDTH / 2, PLAYER_HEIGHT / 2));
+			fb.rectangle(rect(state.playerpos.x + PLAYER_WIDTH / 2 + 1, state.playerpos.y + PLAYER_HEIGHT / 2, PLAYER_WIDTH / 2, PLAYER_HEIGHT / 2));
+		}
+		else {
+			fb.rectangle(rect(state.playerpos.x, state.playerpos.y, PLAYER_WIDTH, PLAYER_HEIGHT));
+		}
+		state.playerstatecounter++;
+	}
+	else if (state.playerstate == playerState::DIZZY) {
+		fb.rectangle(rect(state.playerpos.x, state.playerpos.y + PLAYER_HEIGHT / 2 - 1, PLAYER_WIDTH, PLAYER_HEIGHT / 2));
+		fb.rectangle(rect(state.playerpos.x - PLAYER_HEIGHT / 2 + PLAYER_WIDTH / 2, state.playerpos.y + PLAYER_HEIGHT - 1, PLAYER_HEIGHT, 1));
+
+		fb.pen(blit::rgba(255, 255, 255));
+		fb.pixel(
+			point(
+				state.playerpos.x - 1 + (state.playerstatecounter % (PLAYER_WIDTH + 2)), 
+				(int)(state.playerpos.y + PLAYER_HEIGHT / 2 - 3)));
+		state.playerstatecounter++;
+	}
+
+}
+
 void GameScene::render(uint32_t time) {
 
 	// clear the screen -- fb is a reference to the frame buffer and can be used to draw all things with the 32blit
@@ -141,21 +183,24 @@ void GameScene::render(uint32_t time) {
 		renderFloor(i, state.floors[i]);
 	}
 
-	fb.pen(blit::rgba(0, 200, 255));
-	fb.rectangle(rect(state.playerpos.x, state.playerpos.y, PLAYER_WIDTH, PLAYER_HEIGHT));
+	renderPlayer();
 }
 
 
 void GameScene::on_Left() {
-	state.playervelocity.x -= RUN_VELOCITY;
+	if (state.playerstate != playerState::DIZZY) {
+		state.playervelocity.x -= RUN_VELOCITY;
+	}
 }
 
 void GameScene::on_Right() {
-	state.playervelocity.x += RUN_VELOCITY;
+	if (state.playerstate != playerState::DIZZY) {
+		state.playervelocity.x += RUN_VELOCITY;
+	}
 }
 
 void GameScene::on_A_pressed() {
-	if (state.can_jump) {
+	if (state.can_jump && state.playerstate != playerState::DIZZY) {
 		state.can_jump = false;
 
 		state.playervelocity.y = JUMP_VELOCITY;
@@ -215,6 +260,9 @@ void GameScene::updatePosition() {
 	if (!holeAbove && state.playerpos.y <= SCREEN_HEIGHT - (state.current_floor + 1) * CORRIDOR_HEIGHT) {
 		state.playerpos.y = SCREEN_HEIGHT - (state.current_floor + 1) * CORRIDOR_HEIGHT + FLOOR_HEIGHT;
 		state.playervelocity.y = 0;
+
+		state.playerstate = playerState::DIZZY;
+		state.dizzycounter = DIZZY_TIME;
 	}
 
 	// check if we reach next level
@@ -228,6 +276,9 @@ void GameScene::updatePosition() {
 	if (holeBelow && state.playerpos.y + PLAYER_HEIGHT > SCREEN_HEIGHT - (state.current_floor) * CORRIDOR_HEIGHT) {
 		state.current_floor--;
 		state.score -= 5;
+
+		state.playerstate = playerState::DIZZY;
+		state.dizzycounter = DIZZY_TIME;
 	}
 
 	// check if current level holds us
@@ -250,12 +301,27 @@ void GameScene::updatePosition() {
 
 	if (abs(state.playervelocity.x) < 0.1f) {
 		state.playervelocity.x = 0;
+		if (state.playerstate != playerState::DIZZY) {
+			state.playerstate = playerState::READY;
+		}
+	}
+	else if ( state.playerstate != playerState::DIZZY ) {
+		state.playerstate = playerState::RUNNING;
 	}
 
 	if (state.current_floor == FLOOR_COUNT) {
 		state.current_level++;
 		state.score += 100;
 		init_level();
+	}
+
+	if (state.playerstate == playerState::DIZZY) {
+		if (state.dizzycounter > 0) {
+			state.dizzycounter--;
+		}
+		else {
+			state.playerstate = playerState::READY;
+		}
 	}
 }
 

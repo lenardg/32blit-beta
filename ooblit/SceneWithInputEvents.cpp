@@ -31,10 +31,10 @@ namespace blit {
 				on_Y_pressed();
 			}
 			if (isPressed(blit::button::MENU)) {
-				on_Menu_pressed();
+				on_Home_pressed();
 			}
 			if (isPressed(blit::button::HOME)) {
-				on_Home_pressed();
+				on_Menu_pressed();
 			}
 			if (isPressed(blit::button::JOYSTICK)) {
 				on_Joystick_pressed();
@@ -53,10 +53,10 @@ namespace blit {
 				on_Y_released();
 			}
 			if (isReleased(blit::button::MENU)) {
-				on_Menu_released();
+				on_Home_released();
 			}
 			if (isReleased(blit::button::HOME)) {
-				on_Home_released();
+				on_Menu_released();
 			}
 			if (isReleased(blit::button::JOYSTICK)) {
 				on_Joystick_released();
