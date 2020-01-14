@@ -55,8 +55,8 @@ public:
 	virtual void update(uint32_t time);
 
 private:
-	void add_random_hole(int level);
-	void add_random_hole();
+	void add_random_hole(int floorIndex);
+	void add_random_hole_to_random_floor( int excludeFloor = -1);
 	void init_level();
 
 	static bool compareHoles(hole h1, hole h2);

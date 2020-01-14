@@ -24,7 +24,7 @@ using namespace blit::oo;
 //
 // setup a new level
 //
-void GameScene::add_random_hole(int level) {
+void GameScene::add_random_hole(int floorIndex) {
 	while (true) {
 		hole h;
 		h.speed = (next_random(0, 2) == 0) ? HOLE_BASESPEED : -HOLE_BASESPEED;
@@ -40,14 +40,32 @@ void GameScene::add_random_hole(int level) {
 		//	continue;
 		//}
 
-		state.floors[level].holes.push_back(h);
+		state.floors[floorIndex].holes.push_back(h);
 		break;
 	}
 }
 
-void GameScene::add_random_hole() {
-	auto level = next_random(0, FLOOR_COUNT - 1);
-	add_random_hole(level);
+void GameScene::add_random_hole_to_random_floor( int excludeFloor ) {
+	auto max_holes_per_floor = state.current_level + 1;
+	if (max_holes_per_floor > 3) max_holes_per_floor = 3;
+
+	auto max_holes = true;
+	for ( auto i = 0; i < FLOOR_COUNT - 1; ++i ) {
+		auto f = state.floors[i];
+		if (f.holes.size() < max_holes_per_floor) {
+			max_holes = false;
+			break;
+		}
+	}
+	if (max_holes) return;
+
+	while (true) {
+		auto floor = next_random(0, FLOOR_COUNT - 1);
+		if (floor == excludeFloor) { continue; }
+		if (state.floors[floor].holes.size() >= max_holes_per_floor) { continue; }
+		add_random_hole(floor);
+		break;
+	}
 }
 
 void GameScene::init_level() {
@@ -266,8 +284,8 @@ void GameScene::updatePosition() {
 
 	// check if we reach next level
 	if (holeAbove && state.playerpos.y + PLAYER_HEIGHT <= SCREEN_HEIGHT - (state.current_floor + 1) * CORRIDOR_HEIGHT) {
+		add_random_hole_to_random_floor(state.current_floor);
 		state.current_floor++;
-		add_random_hole();
 		state.score += 10;
 	}
 
