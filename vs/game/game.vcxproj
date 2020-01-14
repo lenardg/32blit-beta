@@ -152,9 +152,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="game.hpp" />
+    <ClInclude Include="GameScene.hpp" />
+    <ClInclude Include="PauseScene.hpp" />
+    <ClInclude Include="Scene.hpp" />
+    <ClInclude Include="SceneManager.hpp" />
+    <ClInclude Include="SceneWithInputEvents.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="PauseScene.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SceneWithInputEvents.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
