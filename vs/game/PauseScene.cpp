@@ -2,6 +2,7 @@
 #include "SceneManager.hpp"
 
 using namespace blit;
+using namespace blit::oo;
 
 PauseScene::PauseScene() {
 	_isTransparent = true;

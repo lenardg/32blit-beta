@@ -2,59 +2,64 @@
 
 #include "32blit.hpp"
 
-class Scene {
-protected:
-	bool _isTransparent;
-private:
-	bool _isAutoDeleting;
-	bool _queuedToEnd;
-	uint16_t _last_buttons = 0;
-	uint16_t _pressed;
-	uint16_t _released;
+namespace blit {
+	namespace oo {
 
-protected:
-	virtual void init();
-	virtual void render(uint32_t time);
-	virtual void update(uint32_t time);
+		class Scene {
+		protected:
+			bool _isTransparent;
+		private:
+			bool _isAutoDeleting;
+			bool _queuedToEnd;
+			uint16_t _last_buttons = 0;
+			uint16_t _pressed;
+			uint16_t _released;
 
-public:
-	virtual void execInit();
-	virtual void execRender(uint32_t time);
-	virtual bool execUpdate(uint32_t time);
+		protected:
+			virtual void init();
+			virtual void render(uint32_t time);
+			virtual void update(uint32_t time);
 
-protected:
-	virtual void checkKeys(uint32_t time);
+		public:
+			virtual void execInit();
+			virtual void execRender(uint32_t time);
+			virtual bool execUpdate(uint32_t time);
 
-public:
-	Scene();
-	Scene(const Scene& sc);
-	virtual ~Scene();
+		protected:
+			virtual void checkKeys(uint32_t time);
 
-	bool isTransparent() {
-		return _isTransparent;
+		public:
+			Scene();
+			Scene(const Scene& sc);
+			virtual ~Scene();
+
+			bool isTransparent() {
+				return _isTransparent;
+			}
+
+			bool isAutoDeleting() {
+				return _isAutoDeleting;
+			}
+
+			void setAutoDeleting(bool shouldAutoDelete) {
+				_isAutoDeleting = shouldAutoDelete;
+			}
+
+			void exitScene() {
+				_queuedToEnd = true;
+			}
+
+			bool shouldExitScene() {
+				return _queuedToEnd;
+			}
+
+		public:
+			void updateKeyStatus();
+
+		protected:
+			bool isPressed(blit::button button);
+			bool isReleased(blit::button button);
+			bool isHeld(blit::button button);
+		};
 	}
-
-	bool isAutoDeleting() {
-		return _isAutoDeleting;
-	}
-
-	void setAutoDeleting(bool shouldAutoDelete) {
-		_isAutoDeleting = shouldAutoDelete;
-	}
-
-	void exitScene() {
-		_queuedToEnd = true;
-	}
-
-	bool shouldExitScene() {
-		return _queuedToEnd;
-	}
-
-public:
-	void updateKeyStatus();
-
-protected:
-	bool isPressed(blit::button button);
-	bool isReleased(blit::button button);
-	bool isHeld(blit::button button);
-};
+}

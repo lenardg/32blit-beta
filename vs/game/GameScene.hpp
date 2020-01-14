@@ -31,7 +31,7 @@ struct gameState {
 	gamefloor floors[FLOOR_COUNT];
 } ;
 
-class GameScene : public SceneWithInputEvents
+class GameScene : public blit::oo::SceneWithInputEvents
 {
 private:
 	gameState state;

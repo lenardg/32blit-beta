@@ -2,7 +2,7 @@
 
 #include "ooblit.hpp"
 
-class PauseScene : public SceneWithInputEvents
+class PauseScene : public blit::oo::SceneWithInputEvents
 {
 public:
 	PauseScene();

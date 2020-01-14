@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ooblit.hpp"
+#include "32blit.hpp"
 
 namespace blit {
 	namespace oo {

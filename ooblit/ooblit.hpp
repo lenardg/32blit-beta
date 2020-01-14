@@ -7,4 +7,4 @@
 #include "SceneWithInputEvents.hpp"
 #include "Utils.hpp"
 
-Scene* startup();
+blit::oo::Scene* startup();

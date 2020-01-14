@@ -1,56 +1,61 @@
 #include "Scene.hpp"
 
-Scene::Scene() {
-	_isTransparent = false;
-	_isAutoDeleting = true;
-	_queuedToEnd = false;
-}
+namespace blit {
+	namespace oo {
 
-Scene::Scene(const Scene& orig) {
-	_isTransparent = orig._isTransparent;
-	_isAutoDeleting = orig._isAutoDeleting;
-}
+		Scene::Scene() {
+			_isTransparent = false;
+			_isAutoDeleting = true;
+			_queuedToEnd = false;
+		}
 
-Scene::~Scene() {
-}
+		Scene::Scene(const Scene& orig) {
+			_isTransparent = orig._isTransparent;
+			_isAutoDeleting = orig._isAutoDeleting;
+		}
 
-void Scene::init() {}
-void Scene::render(uint32_t time) {}
-void Scene::update(uint32_t time) {}
+		Scene::~Scene() {
+		}
 
-void Scene::execInit() {
-	init();
-}
+		void Scene::init() {}
+		void Scene::render(uint32_t time) {}
+		void Scene::update(uint32_t time) {}
 
-void Scene::execRender(uint32_t time) {
-	render(time);
-}
+		void Scene::execInit() {
+			init();
+		}
 
-bool Scene::execUpdate(uint32_t time) {
-	checkKeys(time);
-	update(time);
-	return true;
-}
+		void Scene::execRender(uint32_t time) {
+			render(time);
+		}
 
-void Scene::checkKeys(uint32_t time) {
-	uint16_t changed = blit::buttons ^ _last_buttons;
-	_pressed = changed & blit::buttons;
-	_released = changed & ~blit::buttons;
-	updateKeyStatus();
-}
+		bool Scene::execUpdate(uint32_t time) {
+			checkKeys(time);
+			update(time);
+			return true;
+		}
 
-void Scene::updateKeyStatus() {
-	_last_buttons = blit::buttons;
-}
+		void Scene::checkKeys(uint32_t time) {
+			uint16_t changed = blit::buttons ^ _last_buttons;
+			_pressed = changed & blit::buttons;
+			_released = changed & ~blit::buttons;
+			updateKeyStatus();
+		}
 
-bool Scene::isHeld(blit::button button) {
-	return (blit::buttons & button);
-}
+		void Scene::updateKeyStatus() {
+			_last_buttons = blit::buttons;
+		}
 
-bool Scene::isPressed(blit::button button) {
-	return (_pressed & button);
-}
+		bool Scene::isHeld(blit::button button) {
+			return (blit::buttons & button);
+		}
 
-bool Scene::isReleased(blit::button button) {
-	return (_released & button);
+		bool Scene::isPressed(blit::button button) {
+			return (_pressed & button);
+		}
+
+		bool Scene::isReleased(blit::button button) {
+			return (_released & button);
+		}
+	}
 }

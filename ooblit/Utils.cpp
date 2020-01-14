@@ -9,6 +9,5 @@ namespace blit {
 		uint32_t next_random(uint32_t lowerInclusive, uint32_t upperExclusive) {
 			return (blit::random() % (upperExclusive - lowerInclusive)) + lowerInclusive;
 		}
-
 	}
 }
