@@ -2,15 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="game.cpp" />
-    <ClCompile Include="SceneWithInputEvents.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
     <ClCompile Include="GameScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
@@ -20,15 +11,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.hpp" />
-    <ClInclude Include="SceneWithInputEvents.hpp">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.hpp">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.hpp">
-      <Filter>Framework</Filter>
-    </ClInclude>
     <ClInclude Include="GameScene.hpp">
       <Filter>Scenes</Filter>
     </ClInclude>
@@ -37,9 +19,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Framework">
-      <UniqueIdentifier>{55dd12dd-9706-4311-b8d8-b17a1b613e59}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scenes">
       <UniqueIdentifier>{950f2af1-1dbf-4df2-a84e-1d88f1ee2a1f}</UniqueIdentifier>
     </Filter>

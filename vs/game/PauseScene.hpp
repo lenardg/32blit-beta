@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SceneWithInputEvents.hpp"
+#include "ooblit.hpp"
 
 class PauseScene : public SceneWithInputEvents
 {

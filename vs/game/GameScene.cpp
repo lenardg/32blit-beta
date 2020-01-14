@@ -1,6 +1,7 @@
 #include "GameScene.hpp"
 #include "PauseScene.hpp"
 #include "SceneManager.hpp"
+#include "ooblit.hpp"
 
 #include <cmath>
 #include <list>
@@ -10,6 +11,7 @@
 #include <iomanip>
 
 using namespace blit;
+using namespace blit::oo;
 
 #define PLAYER_WIDTH 4
 #define PLAYER_HEIGHT 10
@@ -26,8 +28,8 @@ using namespace blit;
 void GameScene::add_random_hole(int level) {
 	while (true) {
 		hole h;
-		h.speed = (blit::random() % 2 == 0) ? HOLE_BASESPEED : -HOLE_BASESPEED;
-		h.start = blit::random() % (SCREEN_WIDTH - HOLE_WIDTH);
+		h.speed = (next_random(0, 2) == 0) ? HOLE_BASESPEED : -HOLE_BASESPEED;
+		h.start = next_random(0, SCREEN_WIDTH - HOLE_WIDTH);
 
 		//bool conflict = false;
 		//for (auto xh : state.floors[level].holes) {
@@ -45,12 +47,12 @@ void GameScene::add_random_hole(int level) {
 }
 
 void GameScene::add_random_hole() {
-	auto level = blit::random() % (FLOOR_COUNT - 1);
+	auto level = next_random(0, FLOOR_COUNT - 1);
 	add_random_hole(level);
 }
 
 void GameScene::init_level() {
-	state.playerpos.x = blit::random() % (SCREEN_WIDTH - PLAYER_WIDTH);
+	state.playerpos.x = next_random(0, SCREEN_WIDTH - PLAYER_WIDTH);
 	state.playerpos.y = SCREEN_HEIGHT - PLAYER_HEIGHT;
 
 	state.playervelocity.x = 0;

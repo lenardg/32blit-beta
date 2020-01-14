@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SceneWithInputEvents.hpp"
+#include "ooblit.hpp"
 
 #define RUN_VELOCITY 0.15f
 #define JUMP_VELOCITY -1.68f
