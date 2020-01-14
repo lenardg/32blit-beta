@@ -154,11 +154,13 @@
     <ClInclude Include="game.hpp" />
     <ClInclude Include="GameScene.hpp" />
     <ClInclude Include="PauseScene.hpp" />
+    <ClInclude Include="StartScreen.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="PauseScene.cpp" />
+    <ClCompile Include="StartScreen.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

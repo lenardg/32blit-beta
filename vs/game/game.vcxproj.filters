@@ -8,6 +8,9 @@
     <ClCompile Include="PauseScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="StartScreen.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.hpp" />
@@ -15,6 +18,9 @@
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="PauseScene.hpp">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="StartScreen.hpp">
       <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>
