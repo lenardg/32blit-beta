@@ -1,5 +1,5 @@
 #include "PauseScene.hpp"
-#include "SceneManager.hpp"
+#include "game.hpp"
 
 using namespace blit;
 using namespace blit::oo;

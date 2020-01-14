@@ -91,6 +91,7 @@ target_include_directories(BlitHalSTM32
 		Middlewares/ST/STM32_USB_Device_Library/Core/Inc
 		Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc
 		../32blit
+		../ooblit
 )
 
 target_compile_definitions(BlitHalSTM32
@@ -105,7 +106,7 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -specs=nano.specs -T ${CMA
 
 function(blit_executable NAME SOURCES)
 	add_executable(${NAME}.elf $<TARGET_OBJECTS:BlitHalSTM32> ${SOURCES} ${ARGN})
-  	target_link_libraries(${NAME}.elf BlitEngine)
+	target_link_libraries(${NAME}.elf BlitEngine OOBlitEngine)
 	set_target_properties(${NAME}.elf PROPERTIES LINK_DEPENDS ${MCU_LINKER_SCRIPT})
 	set_property(TARGET ${NAME}.elf APPEND_STRING PROPERTY LINK_FLAGS " -Wl,-Map=${NAME}.map,--cref")
   	add_custom_command(TARGET ${NAME}.elf POST_BUILD

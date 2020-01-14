@@ -1,4 +1,8 @@
 cmake_minimum_required(VERSION 3.1)
 project (jumpingjack)
-include (../../32blit.cmake)
-blit_executable (jumpingjack game.cpp GameScene.cpp PauseScene.cpp Scene.cpp SceneManager.cpp SceneWithInputEvents.cpp)
+include (../../ooblit.cmake)
+blit_executable (jumpingjack game.cpp GameScene.cpp PauseScene.cpp)
+target_include_directories(BlitHalSTM32
+	PUBLIC ../../32blit
+		../../ooblit
+)

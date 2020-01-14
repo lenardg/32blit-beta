@@ -1,7 +1,6 @@
 #include "GameScene.hpp"
 #include "PauseScene.hpp"
-#include "SceneManager.hpp"
-#include "ooblit.hpp"
+#include "game.hpp"
 
 #include <cmath>
 #include <list>
