@@ -10,6 +10,6 @@ public:
 
 protected:
 	virtual void on_X_pressed();
-	virtual void on_Home_pressed();
+	virtual void on_Menu_pressed();
 };
 
