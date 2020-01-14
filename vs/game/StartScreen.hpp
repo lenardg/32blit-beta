@@ -6,6 +6,7 @@ class StartScreen : public blit::oo::SceneWithInputEvents
 {
 public:
 	StartScreen();
+	virtual void init();
 	virtual void render(uint32_t time);
 
 protected:
@@ -13,5 +14,6 @@ protected:
 
 private:
 	int colorIndex;
+	blit::tween tween_bounce;
 };
 
