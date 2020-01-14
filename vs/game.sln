@@ -22,6 +22,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ooblit", "ooblit\ooblit.vcx
 		{280015A3-83D7-416F-A181-7CF88BCCE12F} = {280015A3-83D7-416F-A181-7CF88BCCE12F}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{F670EA8B-6084-4D28-AEBE-95149E41C95F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -65,6 +67,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{280015A3-83D7-416F-A181-7CF88BCCE12F} = {F670EA8B-6084-4D28-AEBE-95149E41C95F}
+		{85DB89B5-DEA0-4429-B41E-0CAA7DB907BA} = {F670EA8B-6084-4D28-AEBE-95149E41C95F}
+		{7ABD6553-55DF-44DD-8728-C77024C3145D} = {F670EA8B-6084-4D28-AEBE-95149E41C95F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A2B87694-5EB1-4C97-9262-7E18C4A3702E}
