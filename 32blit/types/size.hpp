@@ -1,30 +1,30 @@
 #pragma once
 
-#include <stdint.h>
+#include <cstdint>
 
 #include "point.hpp"
 
 namespace blit {
 
-  struct size {
+  struct Size {
 
-    int32_t w, h;
+    int32_t w = 0, h = 0;
 
-    size() : w(0), h(0) {}
-    size(int32_t w, int32_t h) : w(w), h(h) {}
+    Size() = default;
+    Size(int32_t w, int32_t h) : w(w), h(h) {}
 
-    inline size& operator*= (const float a) { w *= a;   h *= a;   return *this; }
+    inline Size& operator*= (const float a) { w = static_cast<int32_t>(w * a); h = static_cast<int32_t>(h * a); return *this; }
 
     bool empty() { return w <= 0 || h <= 0; }
-    
+
     int32_t area() { return w * h; }
 
-    bool contains(const point &p) {
+    bool contains(const Point &p) {
       return p.x >= 0 && p.y >= 0 && p.x < w && p.y < h;
     }
 
   };
 
-  inline size operator*  (size lhs, const float a) { lhs *= a; return lhs; }
+  inline Size operator*  (Size lhs, const float a) { lhs *= a; return lhs; }
 
 }

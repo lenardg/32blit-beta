@@ -14,29 +14,13 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT 2018 STMicroelectronics</center></h2>
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.</center></h2>
   *
-  * Redistribution and use in source and binary forms, with or without modification,
-  * are permitted provided that the following conditions are met:
-  *   1. Redistributions of source code must retain the above copyright notice,
-  *      this list of conditions and the following disclaimer.
-  *   2. Redistributions in binary form must reproduce the above copyright notice,
-  *      this list of conditions and the following disclaimer in the documentation
-  *      and/or other materials provided with the distribution.
-  *   3. Neither the name of STMicroelectronics nor the names of its contributors
-  *      may be used to endorse or promote products derived from this software
-  *      without specific prior written permission.
-  *
-  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  * This software component is licensed by ST under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
   *
   ******************************************************************************
   */
@@ -94,6 +78,23 @@ LoopCopyDataInit:
   adds  r2, r0, r1
   cmp  r2, r3
   bcc  CopyDataInit
+
+/* Copy ITCM */
+  movs  r1, #0
+  b  LoopCopyITCMInit
+CopyITCMInit:
+  ldr  r3, =itcm_data
+  ldr  r3, [r3, r1]
+  str  r3, [r0, r1]
+  adds  r1, r1, #4
+
+LoopCopyITCMInit:
+  ldr  r0, =itcm_text_start
+  ldr  r3, =itcm_text_end
+  adds  r2, r0, r1
+  cmp  r2, r3
+  bcc  CopyITCMInit
+
   ldr  r2, =_sbss
   b  LoopFillZerobss
 /* Zero fill the bss segment. */
@@ -153,10 +154,10 @@ Infinite_Loop:
 * 0x0000.0000.
 *
 *******************************************************************************/
+
    .section  .isr_vector,"a",%progbits
   .type  g_pfnVectors, %object
   .size  g_pfnVectors, .-g_pfnVectors
-
 
 g_pfnVectors:
   .word  _estack
@@ -323,7 +324,7 @@ g_pfnVectors:
   .word     LPUART1_IRQHandler                /* LP UART1 interrupt         */
   .word     0                                 /* Reserved                   */
   .word     CRS_IRQHandler                    /* Clock Recovery Global Interrupt */
-  .word     0                                 /* Reserved                   */
+  .word     ECC_IRQHandler                    /* ECC diagnostic Global Interrupt */  
   .word     SAI4_IRQHandler                   /* SAI4 global interrupt      */
   .word     0                                 /* Reserved                   */
   .word     0                                 /* Reserved                   */
@@ -774,8 +775,11 @@ g_pfnVectors:
    .weak      CRS_IRQHandler
    .thumb_set CRS_IRQHandler,Default_Handler
 
-   .weak      SAI4_IRQHandler
-   .thumb_set SAI4_IRQHandler,Default_Handler
+   .weak      ECC_IRQHandler            
+   .thumb_set ECC_IRQHandler,Default_Handler
+
+   .weak      SAI4_IRQHandler            
+   .thumb_set SAI4_IRQHandler,Default_Handler 
 
    .weak      WAKEUP_PIN_IRQHandler
    .thumb_set WAKEUP_PIN_IRQHandler,Default_Handler

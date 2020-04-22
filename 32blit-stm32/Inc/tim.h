@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -30,18 +30,20 @@
 
 /* USER CODE END Includes */
 
+extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim3;
 extern TIM_HandleTypeDef htim4;
-extern TIM_HandleTypeDef htim6;
+
 extern TIM_HandleTypeDef htim15;
 
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
 
+void MX_TIM2_Init(void);
 void MX_TIM3_Init(void);
 void MX_TIM4_Init(void);
-void MX_TIM6_Init(void);
+
 void MX_TIM15_Init(void);
                         
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);

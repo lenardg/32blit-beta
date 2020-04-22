@@ -2,19 +2,9 @@
     \brief Input handlers
 */
 #include "input.hpp"
+#include "api.hpp"
 
 namespace blit {
-  
-  uint32_t buttons;
-  vec2 joystick;
-  vec3 tilt;
-  float hack_left;
-  float hack_right;
-  float battery;
-  uint8_t battery_vbus_status;
-  uint8_t battery_charge_status;
-  uint8_t battery_fault;
-  float volume;
 
   /**
    * Return pressed state of a button or buttons.

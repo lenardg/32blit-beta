@@ -1,16 +1,16 @@
 #include "32blit.hpp"
 
 
-uint8_t fire_data[] = {
+const uint8_t fire_data[] = {
     0x53, 0x50, 0x52, 0x49, 0x54, 0x45, 0x00, 0x00, // type: sprite
-    0x10, 0x14, // payload size (5136)
+    0x00, 0x10, // payload size (4096)
 
     0x40, 0x00, // width (64)
     0x40, 0x00, // height (64)
     0x02, 0x00, // cols (2)
     0x02, 0x00, // rows (2)
 
-    0x03, // format
+    0x02, // format
 
     0xff, // number of palette colours
 //  r     g     b     a

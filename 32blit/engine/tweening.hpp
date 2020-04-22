@@ -1,19 +1,14 @@
 #pragma once
 
-#include <stdint.h>
+#include <cstdint>
 #include <string>
-
-#ifndef M_PI
-  #define M_PI           3.14159265358979323846f  /* pi */
-#endif
-
 
 namespace blit {
   const uint32_t LINEAR = 1UL << 0;
 
-  struct tween {
-    typedef float (*tween_function)(uint32_t t, float b, float c, uint32_t d);
-    tween_function function = nullptr;
+  struct Tween {
+    using TweenFunction = float (*)(uint32_t t, float b, float c, uint32_t d);
+    TweenFunction function = nullptr;
 
     float from = 0.0f;
     float to = 1.0f;
@@ -32,7 +27,7 @@ namespace blit {
     };
     uint8_t state = STOPPED;
 
-    void init(tween_function function, float start, float end, uint32_t duration, int32_t loops);
+    void init(TweenFunction function, float start, float end, uint32_t duration, int32_t loops);
     void start();
     void stop();
 
@@ -42,7 +37,7 @@ namespace blit {
     bool is_finished()  { return this->state == FINISHED; }
   };
 
-  extern std::vector<tween *> tweens;
+  extern std::vector<Tween *> tweens;
 
   void update_tweens(uint32_t time);
 

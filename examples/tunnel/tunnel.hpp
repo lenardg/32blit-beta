@@ -1,6 +1,6 @@
 #pragma once
 
-#include <stdint.h>
+#include <cstdint>
 
 #include "32blit.hpp"
 
@@ -11,14 +11,14 @@ void render(uint32_t time);
 
 const uint8_t packed_data_ship[] = {
 0x53, 0x50, 0x52, 0x49, 0x54, 0x45, 0x00, 0x00, // type: sprite
-0x54, 0x04, // payload size (1108)
+0x00, 0x04, // payload size (1024)
 
 0x40, 0x00, // width (64)
 0x20, 0x00, // height (32)
 0x02, 0x00, // cols (2)
 0x01, 0x00, // rows (1)
 
-0x03, // format
+0x02, // format
 
 0x10, // number of palette colours
 //  r     g     b     a
@@ -107,14 +107,14 @@ const uint8_t packed_data_ship[] = {
 
 const uint8_t packed_data[] = {
 	0x53, 0x50, 0x52, 0x49, 0x54, 0x45, 0x00, 0x00, // type: sprite
-	0xf8, 0x48, // payload size (18680)
+	0x00, 0x48, // payload size (18432)
 
 	0xc0, 0x00, // width (192)
 	0x80, 0x00, // height (128)
 	0x06, 0x00, // cols (6)
 	0x04, 0x00, // rows (4)
 
-	0x03, // format
+	0x02, // format
 
 	0x39, // number of palette colours
 //  r     g     b     a

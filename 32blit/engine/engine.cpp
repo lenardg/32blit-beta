@@ -1,27 +1,53 @@
 /*! \file engine.cpp
 */
+#include <cstdarg>
+
 #include "engine.hpp"
+#include "api_private.hpp"
 #include "timer.hpp"
 #include "tweening.hpp"
 
 namespace blit {
 
-  void (*init)()                                = nullptr;
-  void (*update)(uint32_t time)                 = nullptr;
-  void (*render)(uint32_t time)                 = nullptr;
-  void (*set_screen_mode)(screen_mode new_mode) = nullptr;
-  uint32_t (*now)()                             = nullptr;
-  uint32_t (*random)()                          = nullptr;
-  void (*debug)(std::string message) = nullptr;
-  int  (*debugf)(const char * psFormatString, ...) 	= nullptr;
+  void (*init)()                                    = nullptr;
+  void (*update)(uint32_t time)                     = nullptr;
+  void (*render)(uint32_t time)                     = nullptr;
 
-  surface null_surface(nullptr, pixel_format::RGB565, size(0, 0));
-  surface &fb = null_surface;
+  void set_screen_mode(ScreenMode new_mode) {
+    screen = api.set_screen_mode(new_mode);
+  }
+
+  void set_screen_palette(const Pen *colours, int num_cols) {
+    api.set_screen_palette(colours, num_cols);
+  }
+
+  uint32_t now() {
+    return api.now();
+  }
+
+  uint32_t random() {
+    return api.random();
+  }
+
+  void debug(std::string message) {
+    api.debug(message);
+  }
+
+  int debugf(const char * psFormatString, ...) {
+    va_list args;
+    va_start(args, psFormatString);
+    int ret = api.debugf(psFormatString, args);
+    va_end(args);
+    return ret;
+  }
+
+  Surface null_surface(nullptr, PixelFormat::M, Size(0, 0));
+  Surface &screen = null_surface;
 
   uint32_t update_rate_ms = 10;
   uint32_t pending_update_time = 0;
 
-  uint32_t render_rate_ms = 25;
+  uint32_t render_rate_ms = 20;
   uint32_t pending_render_time = 0;
 
   uint32_t last_tick_time = 0;
@@ -44,16 +70,9 @@ namespace blit {
       pending_update_time -= update_rate_ms;
     }
 
-    // render if new frame due
-    pending_render_time += (time - last_tick_time);
-    if (pending_render_time >= render_rate_ms) {
-      render(time);
-      pending_render_time -= render_rate_ms;
-      has_rendered = true;
-    }
-
     last_tick_time = time;
-    return has_rendered;
+
+    return true;
   }
 
 }

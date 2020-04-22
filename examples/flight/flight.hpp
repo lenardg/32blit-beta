@@ -1,6 +1,6 @@
 #pragma once
 
-#include <stdint.h>
+#include <cstdint>
 
 #include "32blit.hpp"
 
@@ -15,14 +15,14 @@
 
   static const uint8_t packed_data[] = {
     0x53, 0x50, 0x52, 0x49, 0x54, 0x45, 0x00, 0x00, // type: sprite
-    0x94, 0x28, // payload size (10388)
+    0x00, 0x28, // payload size (10240)
 
     0x80, 0x00, // width (128)
     0x80, 0x00, // height (128)
     0x10, 0x00, // cols (16)
     0x10, 0x00, // rows (16)
 
-    0x03, // format
+    0x02, // format
 
     0x20, // number of palette colours
 //  r     g     b     a
@@ -705,14 +705,14 @@
 
   static const uint8_t water_packed_data[] = {
     0x53, 0x50, 0x52, 0x49, 0x54, 0x45, 0x00, 0x00, // type: sprite
-    0x94, 0x0a, // payload size (2708)
+    0x00, 0x0a, // payload size (2560)
 
     0x40, 0x00, // width (64)
     0x40, 0x00, // height (64)
     0x02, 0x00, // cols (2)
     0x02, 0x00, // rows (2)
 
-    0x03, // format
+    0x02, // format
 
     0x20, // number of palette colours
 //  r     g     b     a

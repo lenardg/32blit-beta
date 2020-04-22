@@ -12,6 +12,7 @@
 #include "Input.hpp"
 #include "System.hpp"
 #include "Renderer.hpp"
+#include "Audio.hpp"
 
 #ifdef VIDEO_CAPTURE
 #include "VideoCapture.hpp"
@@ -23,11 +24,17 @@
 
 static bool running = true;
 
-SDL_Window* window = NULL;
+SDL_Window* window = nullptr;
 
 System *blit_system;
 Input *blit_input;
 Renderer *blit_renderer;
+Audio *blit_audio;
+
+#ifdef VIDEO_CAPTURE
+VideoCapture *blit_capture;
+unsigned int last_record_startstop = 0;
+#endif
 
 void handle_event(SDL_Event &event) {
 	switch (event.type) {
@@ -76,6 +83,14 @@ void handle_event(SDL_Event &event) {
 
 		case SDL_CONTROLLERAXISMOTION:
 			blit_input->handle_controller_motion(event.caxis.axis, event.caxis.value);
+			break;
+
+		case SDL_CONTROLLERDEVICEADDED:
+			SDL_GameControllerOpen(event.cdevice.which);
+			break;
+
+		case SDL_CONTROLLERDEVICEREMOVED:
+			SDL_GameControllerClose(SDL_GameControllerFromInstanceID(event.cdevice.which));
 			break;
 
 		case SDL_RENDER_TARGETS_RESET:
@@ -128,7 +143,7 @@ int main(int argc, char *argv[]) {
 
 	std::cout << "Hello World" << std::endl;
 
-	if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_GAMECONTROLLER) < 0) {
+	if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_GAMECONTROLLER|SDL_INIT_AUDIO) < 0) {
 		fprintf(stderr, "could not initialize SDL2: %s\n", SDL_GetError());
 		return 1;
 	}
@@ -140,7 +155,7 @@ int main(int argc, char *argv[]) {
 		SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE
 	);
 
-	if (window == NULL) {
+	if (window == nullptr) {
 		fprintf(stderr, "could not create window: %s\n", SDL_GetError());
 		return 1;
 	}
@@ -154,10 +169,10 @@ int main(int argc, char *argv[]) {
 	blit_system = new System();
 	blit_input = new Input(window, blit_system);
 	blit_renderer = new Renderer(window, System::width, System::height);
+	blit_audio = new Audio();
 
 #ifdef VIDEO_CAPTURE
-	VideoCapture *blit_capture = new VideoCapture(argv[0]);
-	unsigned int last_record_startstop = 0;
+	blit_capture = new VideoCapture(argv[0]);
 #endif
 
 	blit_system->run();

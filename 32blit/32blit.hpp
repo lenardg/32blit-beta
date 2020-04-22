@@ -1,9 +1,11 @@
 #pragma once
 
+#include "engine/api.hpp"
 #include "engine/engine.hpp"
-#include "engine/utility.hpp"
+#include "engine/file.hpp"
 #include "engine/output.hpp"
 #include "engine/input.hpp"
+#include "audio/audio.hpp"
 #include "engine/timer.hpp"
 #include "engine/tweening.hpp"
 #include "graphics/blend.hpp"
@@ -11,6 +13,7 @@
 #include "graphics/sprite.hpp"
 #include "graphics/tilemap.hpp"
 #include "graphics/font.hpp"
+#include "math/constants.hpp"
 #include "types/vec3.hpp"
 #include "types/mat4.hpp"
 #include "types/mat3.hpp"
@@ -19,11 +22,6 @@
 #include "types/point.hpp"
 #include "types/rect.hpp"
 #include "types/size.hpp"
-
-#ifndef M_PI
-  #define M_PI           3.14159265358979323846f  /* pi */
-#endif
-
 
 #ifdef TARGET_32BLIT_HW
 #define __SECTION__(S) __attribute__((section(S)))
@@ -43,4 +41,3 @@ extern const uint8_t itcm_data;
 #define SRAM1 __SECTION__(".sram1")));
 #define SRAM2 __SECTION__(".sram2")));
 #define SRAM3 __SECTION__(".sram3")));
-

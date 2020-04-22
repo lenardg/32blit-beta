@@ -11,18 +11,34 @@ While the 32blit API is not finalised, this repository represents an overview of
 # You Will Need
 
 1. Some experience writing/compiling C/C++ software
-2. `gcc` for compiling test builds
+2. `gcc` or Visual Studio for compiling test builds
 3. `gcc-arm-none-eabi` for compiling STM32 builds
 4. `cmake` and `make` for building 32blit libraries and examples
-5. A DFU upload tool, on Windows it's easiest to just use "DfuSe Demonstration" (available from [st.com](https://www.st.com/en/development-tools/stsw-stm32080.html))
+5. _Python3_ installed, along with _pip3_ (`sudo apt install python3 python3-pip` on Ubuntu/WSL) and the [32blit tools](https://github.com/pimoroni/32blit-tools) `pip3 install 32blit`
 6. Ubuntu on Windows 10 WSL (_Windows Subsystem for Linux_), or a Linux VM if you prefer.
-7. If you intend on building DFU files (for the device itself), on Ubuntu (or in WSL) you will also need _Python3_ installed, along with _pip3_ (`sudo apt install python3 python3-pip`) and install the following Python modules: `pip3 install construct bitstring` 
-
-On Windows 10 you can either build for win32 or use XMing and run your builds in WSL by prefixing with `DISPLAY=:0.0`.
+7. If you intend on building/uploading the device firmware, you will need a DFU upload tool, on Windows it's easiest to just use "DfuSe Demonstration" (available from [st.com](https://www.st.com/en/development-tools/stsw-stm32080.html)) and the following Python modules: `pip3 install construct bitstring` 
 
 For more information about how to build on the various systems, refer to the platform specific docs in the `docs` folder!
 
-# Overview
+# More docs!
+
+Refer to the OS specific docs:
+
+* [Linux](docs/Linux.md)
+* [Linux - ChromeOS](docs/ChromeOS.md)
+* [Windows - Visual Studio](docs/Windows-VisualStudio.md)
+* [Windows - WSL (Advanced)](docs/Windows-WSL.md)
+* [macOS](docs/macOS.md)
+
+If you want to run in a browser, refer to the [Emscripten docs](docs/Emscripten.md)
+
+If you want to run on device, refer to the [32blit docs](docs/32blit.md)
+
+How to set up your editor:
+
+* [Visual Studio Code](docs/VSCode.md)
+
+# Overview of what is inside?
 
 ## 32blit
 
@@ -30,29 +46,25 @@ The `32blit` directory contains the API/engine for developing your game. This en
 
 ## 32blit-sdl
 
-The `32blit-sdl` directory contains an SDL2 HAL for 32blit compatible with Linux and Linux-on-Windows using Xming. You can use it to run your 32blit projects on your computer and test/debug them a little quicker.
+The `32blit-sdl` directory contains an SDL2 HAL for 32blit compatible with Linux, macOS, Windows and Emscripten. You can use it to run your 32blit projects on your computer and test/debug them a little quicker.
 
 You should be careful relying upon it, however, since `32blit-sdl` is *not an emulator* you may run into memory or performance problems when deploying your game to a 32blit console.
 
-If you're planning to use the SDL HAL you'll need to make sure you:
-
-``` shell
-sudo apt install libsdl2-dev
-```
-
 ## 32blit-stm32
 
-The `32blit-stm32` directory contains the STM32 HAL for 32blit, compatible with the STM32H750. Once you're ready to get your project running on a 32blit console you will need to ensure you have the `gcc-arm-none-eabi` toolchain installed and then follow the instructions below for "Building & Running On 32Blit"
+The `32blit-stm32` directory contains the STM32 HAL for 32blit, compatible with the STM32H750. Once you're ready to get your project running on a 32blit console you will need to ensure you have the `gcc-arm-none-eabi` toolchain installed and then follow the instructions below for [Building & Running On 32Blit](docs/32blit.md)
 
 ## Examples / Projects
-
 
 The `examples` directory contains example projects, these can be built into both SDL or STM32 binaries and cover a range of techniques from simple concepts to complete games.
 
 Refer to the OS/platform specific documentation files in the `docs/` folder for instructions on how to compile and run these examples.
 
-### Troubleshooting
+The `template` directory contains a minimal game template you can copy to start your own project.
+
+## Troubleshooting
 
 If you see `cannot create target because another target with the same name already exists` you've probably run `cmake ..` in the wrong directory (the project directory rather than the build directory), you should remove all but your project files and `cmake ..` again from the build directory.
 
+If you are getting complaints on WSL / Linux about python modules missing, you may have accidentally installed them with sudo. When using pip3 to install modules do not use sudo, this will make sure that modules are installed for the current user.
 
