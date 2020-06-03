@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{950f2af1-1dbf-4df2-a84e-1d88f1ee2a1f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="PauseScene.cpp" />
+    <ClCompile Include="StartScreen.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameScene.hpp" />
+    <ClInclude Include="PauseScene.hpp" />
+    <ClInclude Include="StartScreen.hpp" />
+  </ItemGroup>
+</Project>
