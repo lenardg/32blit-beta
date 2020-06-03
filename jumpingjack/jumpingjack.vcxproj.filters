@@ -6,13 +6,27 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GameScene.cpp" />
-    <ClCompile Include="PauseScene.cpp" />
-    <ClCompile Include="StartScreen.cpp" />
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="StartScreen.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameScene.hpp" />
-    <ClInclude Include="PauseScene.hpp" />
-    <ClInclude Include="StartScreen.hpp" />
+    <ClInclude Include="game.hpp" />
+    <ClInclude Include="GameScene.hpp">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseScene.hpp">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="StartScreen.hpp">
+      <Filter>Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

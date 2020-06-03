@@ -12,8 +12,8 @@ namespace blit {
 			bool _isAutoDeleting;
 			bool _queuedToEnd;
 			uint16_t _last_buttons = 0;
-			uint16_t _pressed;
-			uint16_t _released;
+			uint16_t _pressed = 0;
+			uint16_t _released = 0;
 
 		protected:
 			virtual void init();
@@ -57,9 +57,9 @@ namespace blit {
 			void updateKeyStatus();
 
 		protected:
-			bool isPressed(blit::button button);
-			bool isReleased(blit::button button);
-			bool isHeld(blit::button button);
+			bool isPressed(blit::Button button);
+			bool isReleased(blit::Button button);
+			bool isHeld(blit::Button button);
 		};
 	}
 }

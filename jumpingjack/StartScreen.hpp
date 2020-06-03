@@ -14,6 +14,6 @@ protected:
 
 private:
 	int colorIndex;
-	blit::tween tween_bounce;
+	blit::Tween tween_bounce;
 };
 

@@ -6,7 +6,7 @@
 #include <cstdint>
 
 #ifdef WIN32
-#define __attribute__(A)
+#define __attribute__(A) 
 #endif
 
 #include "font.hpp"

@@ -15,8 +15,8 @@ using namespace blit::oo;
 #define PLAYER_WIDTH 4
 #define PLAYER_HEIGHT 10
 
-#define SCREEN_WIDTH fb.bounds.w
-#define SCREEN_HEIGHT fb.bounds.h
+#define SCREEN_WIDTH screen.bounds.w
+#define SCREEN_HEIGHT screen.bounds.h
 
 ///////////////////////////////////////////////////////////////////////////
 //
@@ -132,45 +132,45 @@ void GameScene::renderFloor(int floornumber, gamefloor floor) {
 	}
 	points.push_back(SCREEN_WIDTH);
 
-	fb.pen(blit::rgba(255, 255, 0));
+	screen.pen = Pen(255, 255, 0);
 
 	for (auto ptr = points.begin(); ptr < points.end(); ++ptr) {
 		auto startx = *ptr;
 		ptr++;
 		auto endx = *ptr;
-		fb.rectangle(rect(startx, SCREEN_HEIGHT - CORRIDOR_HEIGHT - floornumber * CORRIDOR_HEIGHT, endx - startx, FLOOR_HEIGHT));
+		screen.rectangle(Rect(startx, SCREEN_HEIGHT - CORRIDOR_HEIGHT - floornumber * CORRIDOR_HEIGHT, endx - startx, FLOOR_HEIGHT));
 	}
 }
 
 void GameScene::renderPlayer() {
-	fb.pen(blit::rgba(0, 200, 255));
+	screen.pen = Pen(0, 200, 255);
 
 	if (state.playerstate == playerState::READY) {
-		fb.rectangle(rect(state.playerpos.x, state.playerpos.y, PLAYER_WIDTH, PLAYER_HEIGHT));
+		screen.rectangle(Rect(state.playerpos.x, state.playerpos.y, PLAYER_WIDTH, PLAYER_HEIGHT));
 	}
 	else if (state.playerstate == playerState::RUNNING) {
 		if (state.playerstatecounter % 15 < 5) {
-			fb.rectangle(rect(state.playerpos.x, state.playerpos.y, PLAYER_WIDTH, PLAYER_HEIGHT / 2));
-			fb.rectangle(rect(state.playerpos.x - 1, state.playerpos.y + PLAYER_HEIGHT / 2, PLAYER_WIDTH / 2, PLAYER_HEIGHT / 2));
-			fb.rectangle(rect(state.playerpos.x + PLAYER_WIDTH / 2, state.playerpos.y + PLAYER_HEIGHT / 2, PLAYER_WIDTH / 2, PLAYER_HEIGHT / 2));
+			screen.rectangle(Rect(state.playerpos.x, state.playerpos.y, PLAYER_WIDTH, PLAYER_HEIGHT / 2));
+			screen.rectangle(Rect(state.playerpos.x - 1, state.playerpos.y + PLAYER_HEIGHT / 2, PLAYER_WIDTH / 2, PLAYER_HEIGHT / 2));
+			screen.rectangle(Rect(state.playerpos.x + PLAYER_WIDTH / 2, state.playerpos.y + PLAYER_HEIGHT / 2, PLAYER_WIDTH / 2, PLAYER_HEIGHT / 2));
 		}
 		else if (state.playerstatecounter % 15 < 10) {
-			fb.rectangle(rect(state.playerpos.x, state.playerpos.y, PLAYER_WIDTH, PLAYER_HEIGHT / 2));
-			fb.rectangle(rect(state.playerpos.x - 1, state.playerpos.y + PLAYER_HEIGHT / 2, PLAYER_WIDTH / 2, PLAYER_HEIGHT / 2));
-			fb.rectangle(rect(state.playerpos.x + PLAYER_WIDTH / 2 + 1, state.playerpos.y + PLAYER_HEIGHT / 2, PLAYER_WIDTH / 2, PLAYER_HEIGHT / 2));
+			screen.rectangle(Rect(state.playerpos.x, state.playerpos.y, PLAYER_WIDTH, PLAYER_HEIGHT / 2));
+			screen.rectangle(Rect(state.playerpos.x - 1, state.playerpos.y + PLAYER_HEIGHT / 2, PLAYER_WIDTH / 2, PLAYER_HEIGHT / 2));
+			screen.rectangle(Rect(state.playerpos.x + PLAYER_WIDTH / 2 + 1, state.playerpos.y + PLAYER_HEIGHT / 2, PLAYER_WIDTH / 2, PLAYER_HEIGHT / 2));
 		}
 		else {
-			fb.rectangle(rect(state.playerpos.x, state.playerpos.y, PLAYER_WIDTH, PLAYER_HEIGHT));
+			screen.rectangle(Rect(state.playerpos.x, state.playerpos.y, PLAYER_WIDTH, PLAYER_HEIGHT));
 		}
 		state.playerstatecounter++;
 	}
 	else if (state.playerstate == playerState::DIZZY) {
-		fb.rectangle(rect(state.playerpos.x, state.playerpos.y + PLAYER_HEIGHT / 2 - 1, PLAYER_WIDTH, PLAYER_HEIGHT / 2));
-		fb.rectangle(rect(state.playerpos.x - PLAYER_HEIGHT / 2 + PLAYER_WIDTH / 2, state.playerpos.y + PLAYER_HEIGHT - 1, PLAYER_HEIGHT, 1));
+		screen.rectangle(Rect(state.playerpos.x, state.playerpos.y + PLAYER_HEIGHT / 2 - 1, PLAYER_WIDTH, PLAYER_HEIGHT / 2));
+		screen.rectangle(Rect(state.playerpos.x - PLAYER_HEIGHT / 2 + PLAYER_WIDTH / 2, state.playerpos.y + PLAYER_HEIGHT - 1, PLAYER_HEIGHT, 1));
 
-		fb.pen(blit::rgba(255, 255, 255));
-		fb.pixel(
-			point(
+		screen.pen = Pen(255, 255, 255);
+		screen.pixel(
+			Point(
 				state.playerpos.x - 1 + (state.playerstatecounter % (PLAYER_WIDTH + 2)), 
 				(int)(state.playerpos.y + PLAYER_HEIGHT / 2 - 3)));
 		state.playerstatecounter++;
@@ -181,22 +181,22 @@ void GameScene::renderPlayer() {
 void GameScene::render(uint32_t time) {
 
 	// clear the screen -- fb is a reference to the frame buffer and can be used to draw all things with the 32blit
-	fb.pen(blit::rgba(0, 0, 0));
-	fb.clear();
+	screen.pen = Pen(0, 0, 0);
+	screen.clear();
 
 	// draw some text at the top of the screen
-	fb.alpha = 255;
-	fb.mask = nullptr;
-	fb.pen(rgba(255, 255, 255));
-	fb.rectangle(rect(0, 0, 160, 14));
-	fb.pen(rgba(0, 0, 0));
+	screen.alpha = 255;
+	screen.mask = nullptr;
+	screen.pen = Pen(255, 255, 255);
+	screen.rectangle(Rect(0, 0, 160, 14));
+	screen.pen = Pen(0, 0, 0);
 
-	fb.text("Level: " + std::to_string(state.current_level) + " - Score: " + std::to_string(state.score), &minimal_font[0][0], point(5, 4));
+	screen.text("Level: " + std::to_string(state.current_level) + " - Score: " + std::to_string(state.score), minimal_font, Point(5, 4));
 
 	for (int i = 0; i < 8; i++)
 	{
-		fb.pen(blit::rgba(10 + i * 7, 10 + i * 7, 10 + i * 7));
-		fb.rectangle(rect(0, SCREEN_HEIGHT - CORRIDOR_HEIGHT - i * CORRIDOR_HEIGHT, SCREEN_WIDTH, CORRIDOR_HEIGHT));
+		screen.pen = Pen(10 + i * 7, 10 + i * 7, 10 + i * 7);
+		screen.rectangle(Rect(0, SCREEN_HEIGHT - CORRIDOR_HEIGHT - i * CORRIDOR_HEIGHT, SCREEN_WIDTH, CORRIDOR_HEIGHT));
 		renderFloor(i, state.floors[i]);
 	}
 

@@ -46,15 +46,15 @@ namespace blit {
 			_last_buttons = blit::buttons;
 		}
 
-		bool Scene::isHeld(blit::button button) {
+		bool Scene::isHeld(blit::Button button) {
 			return (blit::buttons & button);
 		}
 
-		bool Scene::isPressed(blit::button button) {
+		bool Scene::isPressed(blit::Button button) {
 			return (_pressed & button);
 		}
 
-		bool Scene::isReleased(blit::button button) {
+		bool Scene::isReleased(blit::Button button) {
 			return (_released & button);
 		}
 	}

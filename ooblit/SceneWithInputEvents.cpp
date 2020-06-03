@@ -5,60 +5,60 @@ namespace blit {
 		void SceneWithInputEvents::checkKeys(uint32_t time) {
 			Scene::checkKeys(time);
 
-			if (isHeld(blit::button::DPAD_UP)) {
+			if (isHeld(blit::Button::DPAD_UP)) {
 				on_Up();
 			}
-			if (isHeld(blit::button::DPAD_DOWN)) {
+			if (isHeld(blit::Button::DPAD_DOWN)) {
 				on_Down();
 			}
-			if (isHeld(blit::button::DPAD_LEFT)) {
+			if (isHeld(blit::Button::DPAD_LEFT)) {
 				on_Left();
 			}
-			if (isHeld(blit::button::DPAD_RIGHT)) {
+			if (isHeld(blit::Button::DPAD_RIGHT)) {
 				on_Right();
 			}
 
-			if (isPressed(blit::button::A)) {
+			if (isPressed(blit::Button::A)) {
 				on_A_pressed();
 			}
-			if (isPressed(blit::button::B)) {
+			if (isPressed(blit::Button::B)) {
 				on_B_pressed();
 			}
-			if (isPressed(blit::button::X)) {
+			if (isPressed(blit::Button::X)) {
 				on_X_pressed();
 			}
-			if (isPressed(blit::button::Y)) {
+			if (isPressed(blit::Button::Y)) {
 				on_Y_pressed();
 			}
-			if (isPressed(blit::button::MENU)) {
+			if (isPressed(blit::Button::MENU)) {
 				on_Home_pressed();
 			}
-			if (isPressed(blit::button::HOME)) {
+			if (isPressed(blit::Button::HOME)) {
 				on_Menu_pressed();
 			}
-			if (isPressed(blit::button::JOYSTICK)) {
+			if (isPressed(blit::Button::JOYSTICK)) {
 				on_Joystick_pressed();
 			}
 
-			if (isReleased(blit::button::A)) {
+			if (isReleased(blit::Button::A)) {
 				on_A_released();
 			}
-			if (isReleased(blit::button::B)) {
+			if (isReleased(blit::Button::B)) {
 				on_B_released();
 			}
-			if (isReleased(blit::button::X)) {
+			if (isReleased(blit::Button::X)) {
 				on_X_released();
 			}
-			if (isReleased(blit::button::Y)) {
+			if (isReleased(blit::Button::Y)) {
 				on_Y_released();
 			}
-			if (isReleased(blit::button::MENU)) {
+			if (isReleased(blit::Button::MENU)) {
 				on_Home_released();
 			}
-			if (isReleased(blit::button::HOME)) {
+			if (isReleased(blit::Button::HOME)) {
 				on_Menu_released();
 			}
-			if (isReleased(blit::button::JOYSTICK)) {
+			if (isReleased(blit::Button::JOYSTICK)) {
 				on_Joystick_released();
 			}
 		}

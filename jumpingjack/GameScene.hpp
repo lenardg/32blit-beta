@@ -30,8 +30,8 @@ enum class playerState {
 };
 
 struct gameState {
-	vec2 playerpos;
-	vec2 playervelocity;
+	blit::Vec2 playerpos;
+	blit::Vec2 playervelocity;
 	playerState playerstate;
 	uint16_t playerstatecounter;
 	uint8_t lives;
