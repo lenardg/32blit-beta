@@ -180,6 +180,9 @@ void GameScene::renderPlayer() {
 
 uint32_t renderTime = -1;
 uint32_t renderCount = 0;
+uint32_t updateTime = -1;
+uint32_t updateCount = 0;
+uint32_t updateFPS = 0, renderFPS = 0;
 
 void GameScene::render(uint32_t time) {
 
@@ -194,7 +197,8 @@ void GameScene::render(uint32_t time) {
 	screen.rectangle(Rect(0, 0, 160, 14));
 	screen.pen = Pen(0, 0, 0);
 
-	screen.text("Level: " + std::to_string(state.current_level) + " - Score: " + std::to_string(state.score), minimal_font, Point(5, 4));
+//	screen.text("Level: " + std::to_string(state.current_level) + " - Score: " + std::to_string(state.score), minimal_font, Point(5, 4));
+	screen.text("Render FPS: " + std::to_string(renderFPS) + " - Update FPS: " + std::to_string(updateFPS), minimal_font, Point(5, 4));
 
 	for (int i = 0; i < 8; i++)
 	{
@@ -212,6 +216,7 @@ void GameScene::render(uint32_t time) {
 	}
 	else if (time - renderTime > 1000) {
 		debug("render FPS " + std::to_string(renderCount));
+		renderFPS = renderCount;
 		renderTime = time;
 		renderCount = 0;
 	}
@@ -388,8 +393,6 @@ void GameScene::updateHoles() {
 // This is called to update your game state. time is the 
 // amount if milliseconds elapsed since the start of your game
 //
-uint32_t updateTime;
-uint32_t updateCount;
 void GameScene::update(uint32_t time) {
 	updatePosition();
 	updateHoles();
@@ -400,6 +403,7 @@ void GameScene::update(uint32_t time) {
 	}
 	else if (time - updateTime > 1000) {
 		debug("update FPS " + std::to_string(updateCount));
+		updateFPS = updateCount;
 		updateTime = time;
 		updateCount = 0;
 	}
