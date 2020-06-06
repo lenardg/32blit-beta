@@ -178,12 +178,6 @@ void GameScene::renderPlayer() {
 
 }
 
-uint32_t renderTime = -1;
-uint32_t renderCount = 0;
-uint32_t updateTime = -1;
-uint32_t updateCount = 0;
-uint32_t updateFPS = 0, renderFPS = 0;
-
 void GameScene::render(uint32_t time) {
 
 	// clear the screen -- fb is a reference to the frame buffer and can be used to draw all things with the 32blit
@@ -197,8 +191,7 @@ void GameScene::render(uint32_t time) {
 	screen.rectangle(Rect(0, 0, 160, 14));
 	screen.pen = Pen(0, 0, 0);
 
-//	screen.text("Level: " + std::to_string(state.current_level) + " - Score: " + std::to_string(state.score), minimal_font, Point(5, 4));
-	screen.text("Render FPS: " + std::to_string(renderFPS) + " - Update FPS: " + std::to_string(updateFPS), minimal_font, Point(5, 4));
+	screen.text("Level: " + std::to_string(state.current_level) + " - Score: " + std::to_string(state.score), minimal_font, Point(5, 4));
 
 	for (int i = 0; i < 8; i++)
 	{
@@ -208,22 +201,6 @@ void GameScene::render(uint32_t time) {
 	}
 
 	renderPlayer();
-
-
-	if (renderTime == -1) {
-		renderTime = time;
-		renderCount = 0;
-	}
-	else if (time - renderTime > 1000) {
-		debug("render FPS " + std::to_string(renderCount));
-		renderFPS = renderCount;
-		renderTime = time;
-		renderCount = 0;
-	}
-	else {
-		renderCount++;
-	}
-
 }
 
 
@@ -396,18 +373,4 @@ void GameScene::updateHoles() {
 void GameScene::update(uint32_t time) {
 	updatePosition();
 	updateHoles();
-
-	if (updateTime == -1) {
-		updateTime = time;
-		updateCount = 0;
-	}
-	else if (time - updateTime > 1000) {
-		debug("update FPS " + std::to_string(updateCount));
-		updateFPS = updateCount;
-		updateTime = time;
-		updateCount = 0;
-	}
-	else {
-		updateCount++;
-	}
 }
