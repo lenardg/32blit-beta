@@ -178,6 +178,9 @@ void GameScene::renderPlayer() {
 
 }
 
+uint32_t renderTime = -1;
+uint32_t renderCount = 0;
+
 void GameScene::render(uint32_t time) {
 
 	// clear the screen -- fb is a reference to the frame buffer and can be used to draw all things with the 32blit
@@ -201,6 +204,21 @@ void GameScene::render(uint32_t time) {
 	}
 
 	renderPlayer();
+
+
+	if (renderTime == -1) {
+		renderTime = time;
+		renderCount = 0;
+	}
+	else if (time - renderTime > 1000) {
+		debug("render FPS " + std::to_string(renderCount));
+		renderTime = time;
+		renderCount = 0;
+	}
+	else {
+		renderCount++;
+	}
+
 }
 
 
@@ -370,7 +388,22 @@ void GameScene::updateHoles() {
 // This is called to update your game state. time is the 
 // amount if milliseconds elapsed since the start of your game
 //
+uint32_t updateTime;
+uint32_t updateCount;
 void GameScene::update(uint32_t time) {
 	updatePosition();
 	updateHoles();
+
+	if (updateTime == -1) {
+		updateTime = time;
+		updateCount = 0;
+	}
+	else if (time - updateTime > 1000) {
+		debug("update FPS " + std::to_string(updateCount));
+		updateTime = time;
+		updateCount = 0;
+	}
+	else {
+		updateCount++;
+	}
 }
