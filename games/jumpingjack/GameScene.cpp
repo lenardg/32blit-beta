@@ -149,12 +149,12 @@ void GameScene::renderPlayer() {
 		screen.rectangle(Rect(state.playerpos.x, state.playerpos.y, PLAYER_WIDTH, PLAYER_HEIGHT));
 	}
 	else if (state.playerstate == playerState::RUNNING) {
-		if (state.playerstatecounter % 15 < 5) {
+		if (state.playerstatecounter % 36 < 12) {
 			screen.rectangle(Rect(state.playerpos.x, state.playerpos.y, PLAYER_WIDTH, PLAYER_HEIGHT / 2));
 			screen.rectangle(Rect(state.playerpos.x - 1, state.playerpos.y + PLAYER_HEIGHT / 2, PLAYER_WIDTH / 2, PLAYER_HEIGHT / 2));
 			screen.rectangle(Rect(state.playerpos.x + PLAYER_WIDTH / 2, state.playerpos.y + PLAYER_HEIGHT / 2, PLAYER_WIDTH / 2, PLAYER_HEIGHT / 2));
 		}
-		else if (state.playerstatecounter % 15 < 10) {
+		else if (state.playerstatecounter % 36 < 24) {
 			screen.rectangle(Rect(state.playerpos.x, state.playerpos.y, PLAYER_WIDTH, PLAYER_HEIGHT / 2));
 			screen.rectangle(Rect(state.playerpos.x - 1, state.playerpos.y + PLAYER_HEIGHT / 2, PLAYER_WIDTH / 2, PLAYER_HEIGHT / 2));
 			screen.rectangle(Rect(state.playerpos.x + PLAYER_WIDTH / 2 + 1, state.playerpos.y + PLAYER_HEIGHT / 2, PLAYER_WIDTH / 2, PLAYER_HEIGHT / 2));
