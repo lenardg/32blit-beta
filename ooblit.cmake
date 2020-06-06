@@ -1,15 +1,11 @@
-if (NOT DEFINED BLIT_ONCE)
-	set(BLIT_ONCE TRUE)
+include(${CMAKE_CURRENT_LIST_DIR}/32blit.cmake)
 
-	set(CMAKE_CXX_STANDARD 14)
+if (NOT DEFINED OOBLIT_ONCE)
+	set(OOBLIT_ONCE TRUE)
 
-	add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/32blit 32blit)
 	add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/ooblit ooblit)
-
-	if (${CMAKE_SYSTEM_NAME} STREQUAL Generic)
-		add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/32blit-stm32 32blit-stm32)
-	else()
-		add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/32blit-sdl 32blit-sdl)
-	endif()
-
 endif ()
+
+function(blit_add_ooblit NAME)
+	target_link_libraries(${NAME} OOBlitEngine)
+endfunction()

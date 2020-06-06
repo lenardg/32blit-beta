@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.8)
 project(32blit)
 include(32blit.cmake)
 add_subdirectory(examples)
+#add_subdirectory(ooblit)
+add_subdirectory(games)
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL Generic)
     add_subdirectory(firmware)
