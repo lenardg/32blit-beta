@@ -207,12 +207,18 @@ void GameScene::render(uint32_t time) {
 void GameScene::on_Left() {
 	if (state.playerstate != playerState::DIZZY) {
 		state.playervelocity.x -= RUN_VELOCITY;
-	}
+		if (state.playervelocity.x < -MAX_RUN_VELOCITY) {
+			state.playervelocity.x = -MAX_RUN_VELOCITY;
+		}
+	}	
 }
 
 void GameScene::on_Right() {
 	if (state.playerstate != playerState::DIZZY) {
 		state.playervelocity.x += RUN_VELOCITY;
+		if (state.playervelocity.x > MAX_RUN_VELOCITY) {
+			state.playervelocity.x = MAX_RUN_VELOCITY;
+		}
 	}
 }
 

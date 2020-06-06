@@ -2,7 +2,8 @@
 
 #include "ooblit.hpp"
 
-#define RUN_VELOCITY 0.15f
+#define RUN_VELOCITY 0.35f
+#define MAX_RUN_VELOCITY 1.5f
 #define JUMP_VELOCITY -1.68f
 #define GRAVITY 0.1f
 
