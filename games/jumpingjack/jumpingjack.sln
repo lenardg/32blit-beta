@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "32blit", "..\vs\32blit\32blit.vcxproj", "{280015A3-83D7-416F-A181-7CF88BCCE12F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "32blit", "..\..\vs\32blit\32blit.vcxproj", "{280015A3-83D7-416F-A181-7CF88BCCE12F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "32blit-sdl", "..\vs\32blit-sdl\32blit-sdl.vcxproj", "{85DB89B5-DEA0-4429-B41E-0CAA7DB907BA}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "32blit-sdl", "..\..\vs\32blit-sdl\32blit-sdl.vcxproj", "{85DB89B5-DEA0-4429-B41E-0CAA7DB907BA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{280015A3-83D7-416F-A181-7CF88BCCE12F} = {280015A3-83D7-416F-A181-7CF88BCCE12F}
 	EndProjectSection
@@ -17,7 +17,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "jumpingjack", "jumpingjack.
 		{85DB89B5-DEA0-4429-B41E-0CAA7DB907BA} = {85DB89B5-DEA0-4429-B41E-0CAA7DB907BA}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ooblit", "..\vs\ooblit\ooblit.vcxproj", "{7ABD6553-55DF-44DD-8728-C77024C3145D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ooblit", "..\..\vs\ooblit\ooblit.vcxproj", "{7ABD6553-55DF-44DD-8728-C77024C3145D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{280015A3-83D7-416F-A181-7CF88BCCE12F} = {280015A3-83D7-416F-A181-7CF88BCCE12F}
 		{85DB89B5-DEA0-4429-B41E-0CAA7DB907BA} = {85DB89B5-DEA0-4429-B41E-0CAA7DB907BA}
